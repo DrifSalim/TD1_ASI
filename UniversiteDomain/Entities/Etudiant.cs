@@ -10,6 +10,6 @@ public class Etudiant
 
     public override string ToString()
     {
-        return NumEtud;
+        return $"ID {Id} : {NumEtud} - {Nom} {Prenom} inscrit en "/*+ParcoursSuivi*/;
     }
 }
