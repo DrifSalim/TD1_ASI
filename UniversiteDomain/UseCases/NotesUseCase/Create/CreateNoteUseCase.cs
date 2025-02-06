@@ -5,9 +5,9 @@ using UniversiteDomain.Exceptions.NotesExceptions;
 using UniversiteDomain.Exceptions.ParcoursException;
 using UniversiteDomain.Exceptions.UeExceptions;
 
-namespace UniversiteDomain.UseCases.EtudiantUseCases.AjouterNote;
+namespace UniversiteDomain.UseCases.NotesUseCases.Create;
 
-public class AddNoteUseCase(IRepositoryFactory repositoryFactory)
+public class CreateNoteUseCase(IRepositoryFactory repositoryFactory)
 {
     public async Task ExecuteAsync(Etudiant etudiant, Ue ue, double valeurNote)
     {

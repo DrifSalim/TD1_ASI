@@ -2,12 +2,19 @@ namespace UniversiteDomain.Entities;
 
 public class Note
 {
-    public double Valeur { get; set; }
+    // Clé primaire composite
     public long EtudiantId { get; set; }
     public long UeId { get; set; }
+
+    // Propriété
+    public double Valeur { get; set; }
+
+    // Relations ManyToOne
+    public Etudiant Etudiant { get; set; }
+    public Ue Ue { get; set; }
     
     public override string ToString()
     {
-        return $"Etudiant : {EtudiantId} - a eu {Valeur}/20 en {UeId}";
+        return $"Etudiant : {Etudiant} - a eu {Valeur}/20 en {Ue}";
     }
 }
