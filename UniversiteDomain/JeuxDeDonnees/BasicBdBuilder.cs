@@ -6,8 +6,8 @@ using UniversiteDomain.UseCases.NotesUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.EtudiantDansParcours;
 using UniversiteDomain.UseCases.ParcoursUseCases.UeDansParcours;
-using UniversiteDomain.UseCases.SecurityUseCases;
-using UniversiteDomain.UseCases.SecurityUseCases.Create;
+using UniversiteDomain.UseCases.SecurityUseCase;
+using UniversiteDomain.UseCases.SecurityUseCase.Create;
 using UniversiteDomain.UseCases.UeUseCases.Create;
 
 namespace UniversiteDomain.JeuxDeDonnees;

@@ -2,27 +2,36 @@ using UniversiteDomain.Entities;
 
 namespace UniversiteDomain.Dtos;
 
-public class EtudiantDto
+public class EtudiantCompletDto
 {
     public long Id { get; set; }
     public string NumEtud { get; set; }
     public string Nom { get; set; }
     public string Prenom { get; set; }
     public string Email { get; set; }
+    public ParcoursDto ParcoursSuivi { get; set; }
+    public List<NoteAvecUeDto> NotesObtenues { get; set; }=new();
 
-    public EtudiantDto ToDto(Etudiant etudiant)
+    public EtudiantCompletDto ToDto(Etudiant etudiant)
     {
         Id = etudiant.Id;
         NumEtud = etudiant.NumEtud;
         Nom = etudiant.Nom;
         Prenom = etudiant.Prenom;
         Email = etudiant.Email;
+        if (etudiant.ParcoursSuivi != null) ParcoursSuivi = new ParcoursDto().ToDto(etudiant.ParcoursSuivi);
+        if (etudiant.NotesObtenues != null)
+        {
+            NotesObtenues = NoteAvecUeDto.ToDtos(etudiant.NotesObtenues);
+        }
+        
         return this;
     }
     
     public Etudiant ToEntity()
     {
-        return new Etudiant {Id = this.Id, NumEtud = this.NumEtud, Nom = this.Nom, Prenom = this.Prenom, Email = this.Email};
+        List<Note> notes = NoteAvecUeDto.ToEntities(NotesObtenues);
+        return new Etudiant {Id = this.Id, NumEtud = this.NumEtud, Nom = this.Nom, Prenom = this.Prenom, Email = this.Email, NotesObtenues = notes};
     }
     public static List<EtudiantDto> ToDtos(List<Etudiant> etudiants)
     {

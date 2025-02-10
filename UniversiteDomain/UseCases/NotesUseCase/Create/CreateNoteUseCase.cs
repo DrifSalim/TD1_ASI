@@ -9,14 +9,14 @@ namespace UniversiteDomain.UseCases.NotesUseCases.Create;
 
 public class CreateNoteUseCase(IRepositoryFactory repositoryFactory)
 {
-    public async Task ExecuteAsync(Etudiant etudiant, Ue ue, double valeurNote)
+    public async Task ExecuteAsync(Etudiant etudiant, Ue ue, float valeurNote)
     {
         ArgumentNullException.ThrowIfNull(etudiant);
         ArgumentNullException.ThrowIfNull(ue);
         await ExecuteAsync(etudiant.Id, ue.Id, valeurNote);
     }
 
-    public async Task ExecuteAsync(long etudiantId, long ueId, double valeurNote)
+    public async Task ExecuteAsync(long etudiantId, long ueId, float valeurNote)
     {
         await CheckBusinessRules(etudiantId, ueId, valeurNote);
         await repositoryFactory.NoteRepository().AddNoteAsync(new Note 
@@ -27,7 +27,7 @@ public class CreateNoteUseCase(IRepositoryFactory repositoryFactory)
         });
     }
 
-    private async Task CheckBusinessRules(long etudiantId, long ueId, double valeurNote)
+    private async Task CheckBusinessRules(long etudiantId, long ueId, float valeurNote)
         {
             // Validation des paramètres
             if (etudiantId <= 0) throw new ArgumentOutOfRangeException(nameof(etudiantId), "L'ID de l'étudiant doit être positif.");

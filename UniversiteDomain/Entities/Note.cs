@@ -7,7 +7,7 @@ public class Note
     public long UeId { get; set; }
 
     // Propriété
-    public double Valeur { get; set; }
+    public float Valeur { get; set; }
 
     // Relations ManyToOne
     public Etudiant Etudiant { get; set; }

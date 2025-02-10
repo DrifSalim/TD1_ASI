@@ -1,6 +1,6 @@
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Entities;
-namespace UniversiteDomain.UseCases.SecurityUseCases.Get;
+namespace UniversiteDomain.UseCases.SecurityUseCase.Get;
 
 public class IsInRoleUseCase(IRepositoryFactory factory)
 {

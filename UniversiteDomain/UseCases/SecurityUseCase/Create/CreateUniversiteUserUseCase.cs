@@ -2,7 +2,7 @@ using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Entities;
 using UniversiteDomain.DataAdapters;
 using UniversiteDomain.Exceptions.EtudiantExceptions;
-namespace UniversiteDomain.UseCases.SecurityUseCases.Create;
+namespace UniversiteDomain.UseCases.SecurityUseCase.Create;
 
 public class CreateUniversiteUserUseCase(IRepositoryFactory factory)
 {

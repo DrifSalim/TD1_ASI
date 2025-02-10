@@ -1,6 +1,6 @@
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Entities;
-namespace UniversiteDomain.UseCases.SecurityUseCases.Create;
+namespace UniversiteDomain.UseCases.SecurityUseCase.Create;
 
 public class CreateUniversiteRoleUseCase(IRepositoryFactory factory)
 {
