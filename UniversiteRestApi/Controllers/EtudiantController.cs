@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using UniversiteDomain.UseCases.EtudiantUseCases.Create;
 using UniversiteDomain.UseCases.EtudiantUseCases.Delete;
 using UniversiteDomain.UseCases.EtudiantUseCases.Get;
-using UniversiteDomain.UseCases.SecurityUseCase.Update;
+using UniversiteDomain.UseCases.SecurityUseCases.Update;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Dtos;
 
@@ -193,6 +193,7 @@ namespace UniversiteRestApi.Controllers
             try
             {
                 await updateUserUc.ExecuteAsync(etudiantDto.ToEntity());
+                
                 await updateEtudiantUc.ExecuteAsync(etudiantDto.ToEntity());
             }
             catch (Exception e)

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using UniversiteDomain.DataAdapters;
 using UniversiteDomain.Entities;
+using UniversiteDomain.Exceptions;
 using UniversiteEFDataProvider.Data;
 using UniversiteEFDataProvider.Entities;
 
@@ -35,17 +37,19 @@ public class UniversiteUserRepository(UniversiteDbContext context, UserManager<U
         await userManager.UpdateAsync(user);
         await context.SaveChangesAsync();
     }
-    public async Task<int> DeleteAsync(long id)
+    
+    public async Task DeleteAsync(UniversiteUser user)
     {
-        Etudiant etud = context.Etudiants.Find(id);
-        UniversiteUser user= await userManager.FindByEmailAsync(etud.Email);
+        
         if (user!=null)
         {
             await userManager.DeleteAsync(user);
             int res=await  context.SaveChangesAsync();
-            return 1;
         }
-        return 0;
+        else
+        {
+            throw new UserNotFoundException($"L'utilisateur {user} n'existe pas.");
+        }
     }
 
     public async Task<bool> IsInRoleAsync(string email, string role)
@@ -53,5 +57,11 @@ public class UniversiteUserRepository(UniversiteDbContext context, UserManager<U
         bool res = false;
         var user =await userManager.FindByEmailAsync(email);
         return await userManager.IsInRoleAsync(user, role);
+    }
+
+    public async Task<IUniversiteUser?> FindUserByIdAsync(long etudiantId)
+    {
+        return await context.Users
+            .FirstOrDefaultAsync(u => u.Etudiant.Id== etudiantId);
     }
 }

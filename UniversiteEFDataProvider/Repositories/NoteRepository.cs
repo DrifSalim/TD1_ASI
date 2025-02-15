@@ -43,4 +43,5 @@ public class NoteRepository(UniversiteDbContext context) : Repository<Note>(cont
 
         await AddNoteAsync(etudiant, ue, note);
     }
+    
 }

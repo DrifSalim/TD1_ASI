@@ -1,42 +1,36 @@
 using UniversiteDomain.UseCases.EtudiantUseCases.Get;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Entities;
+using UniversiteDomain.Exceptions;
+using UniversiteDomain.Exceptions.EtudiantExceptions;
 
 namespace UniversiteDomain.UseCases.SecurityUseCase.Delete;
 
 public class DeleteUniversiteUserUseCase(IRepositoryFactory repositoryFactory)
 {
-    public async Task<bool> ExecuteAsync(long etuiantId)
+    public async Task<bool> ExecuteAsync(long etudiantId)
     {
-        // Ensure the input is a valid student number (non-zero)
-        if (etuiantId== 0)
+        if (etudiantId <= 0)
         {
-            throw new ArgumentException("Numéro d'étudiant is required", nameof(etuiantId));
+            throw new ArgumentException("Numéro d'étudiant positif", nameof(etudiantId));
         }
 
-        // Search for the Etudiant by their NumEtud
-        var user = await repositoryFactory.UniversiteUserRepository().FindByConditionAsync(e => e.EtudiantId.Equals(etuiantId));
-        Console.WriteLine($"Deleting student with NumEtud {etuiantId} &&");
-
-        // If no Etudiant is found, throw an exception
-        /*if (!etudiant.Any())
+        List<Etudiant> etud = await repositoryFactory.EtudiantRepository()
+            .FindByConditionAsync(e => e.Id == etudiantId);
+        if (etud.Count == 0)
         {
-            Console.WriteLine($"Deleting student with NumEtud {numEtud}aaa");
+            throw new EtudiantNotFoundException("User not found");
+        }
+        var user= await repositoryFactory.UniversiteUserRepository().FindByEmailAsync(etud[0].Email);
+        if (user == null)
+        {
+            throw new UserNotFoundException($"Le user: {etudiantId} n'existe pas.");
+        }
 
-            throw new EtudiantNotFoundException($"A student with NumEtud {numEtud} does not exist.");
-        }*/
-        Console.WriteLine($"Deleting student with NumEtud {etuiantId}");
-        // If the Etudiant exists, delete them
-        //var etudiantToDelete = etudiant.First(); // We expect only one result, as NumEtud should be unique
-        await repositoryFactory.EtudiantRepository().DeleteAsync(etuiantId);
-
-        // Commit the transaction (save changes to the database)
+        await repositoryFactory.UniversiteUserRepository().DeleteAsync(user);
         await repositoryFactory.SaveChangesAsync();
-        
-        Console.WriteLine($"Deleting student with NumEtud ana hna f deleteetudusecase sff rah daz");
 
-
-        return true; // Return true to indicate successful deletion
+        return true;
     }
 
 
@@ -46,3 +40,4 @@ public class DeleteUniversiteUserUseCase(IRepositoryFactory repositoryFactory)
         return role.Equals(Roles.Responsable) || role.Equals(Roles.Scolarite);
     }
 }
+
