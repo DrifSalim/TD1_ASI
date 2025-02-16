@@ -95,4 +95,8 @@ public class UploadCsvService(IEtudiantRepository _etudiantRepository, IUeReposi
 
         return (true, new List<string>());
     }
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite);
+    }
 }

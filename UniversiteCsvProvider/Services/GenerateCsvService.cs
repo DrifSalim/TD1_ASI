@@ -54,4 +54,8 @@ public class GenerateCsvService(IEtudiantRepository _etudiantRepository, IUeRepo
 
         return memoryStream;
     }
+    public bool IsAuthorized(string role)
+    {
+        return role.Equals(Roles.Scolarite);
+    }
 }
