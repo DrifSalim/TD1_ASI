@@ -21,7 +21,7 @@ public class NotesController (GenerateCsvService _generationService, UploadCsvSe
         return File(stream, "text/csv", $"Notes_UE_{ueId}.csv");
     }
 
-    // Uploader les notes (avec ID de l'UE dans la route)
+    // Uploader les notes De l'UE (avec ID de l'UE dans la route)
     [HttpPost("upload/{ueId}")]
     public async Task<IActionResult> UploadNotes(long ueId, IFormFile file)
     {
