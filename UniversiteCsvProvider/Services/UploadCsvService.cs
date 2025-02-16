@@ -63,16 +63,17 @@ public class UploadCsvService(IEtudiantRepository _etudiantRepository, IUeReposi
                 }
 
                 // 5. Validation Note
+                
                 if (record.Note.HasValue && (record.Note < 0 || record.Note > 20))
                 {
-                    lineErrors.Add($"Note invalide : {record.Note}/20");
+                    lineErrors.Add($"Note invalide : {record.Note}/20 (doit être entre 0 et 20)");
                 }
                 
 
                 // Collecte des erreurs
                 if (lineErrors.Any())
                 {
-                    errors.Add($"{string.Join("\n ", lineErrors)}");
+                    errors.Add($"{string.Join(", ", lineErrors)}");
                 }
                 else
                 {
