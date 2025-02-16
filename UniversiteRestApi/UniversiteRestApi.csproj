@@ -15,10 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\UniversiteCsvProvider\UniversiteCsvProvider.csproj" />
       <ProjectReference Include="..\UniversiteDomain\UniversiteDomain.csproj" />
       <ProjectReference Include="..\UniversiteEFDataProvider\UniversiteEFDataProvider.csproj" />
     </ItemGroup>

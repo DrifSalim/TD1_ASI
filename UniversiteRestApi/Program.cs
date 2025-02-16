@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using UniversiteCsvProvider.Services;
+using UniversiteDomain.DataAdapters;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.JeuxDeDonnees;
 using UniversiteEFDataProvider.Data;
 using UniversiteEFDataProvider.Entities;
+using UniversiteEFDataProvider.Repositories;
 using UniversiteEFDataProvider.RepositoryFactories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +29,12 @@ String connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 builder.Services.AddDbContext<UniversiteDbContext>(options =>options.UseMySQL(connectionString));
 // La factory est rajoutée dans les services de l'application, toujours prête à être utilisée par injection de dépendances
 builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
+//Rajout des services
+builder.Services.AddScoped<GenerateCsvService>();
+builder.Services.AddScoped<UploadCsvService>();
+builder.Services.AddScoped<IEtudiantRepository, EtudiantRepository>();
+builder.Services.AddScoped<IUeRepository, UeRepository>();
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
 // Sécurisation
 builder.Services.AddAuthorization();

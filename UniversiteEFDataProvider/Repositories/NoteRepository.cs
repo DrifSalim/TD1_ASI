@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using UniversiteDomain.Entities;
 using UniversiteDomain.DataAdapters;
 using UniversiteEFDataProvider.Data;
@@ -13,7 +14,7 @@ public class NoteRepository(UniversiteDbContext context) : Repository<Note>(cont
         await Context.SaveChangesAsync();
     }
 
-    public async Task AddNoteAsync(Etudiant etudiant, Ue ue, float note)
+    /*public async Task AddNoteAsync(Etudiant etudiant, Ue ue, float note)
     {
         ArgumentNullException.ThrowIfNull(etudiant);
         ArgumentNullException.ThrowIfNull(ue);
@@ -27,7 +28,7 @@ public class NoteRepository(UniversiteDbContext context) : Repository<Note>(cont
         };
 
         await AddNoteAsync(nouvelleNote);
-    }
+    }*/
 
     public async Task AddNoteAsync(long idEtudiant, long idUe, float note)
     {
@@ -42,6 +43,32 @@ public class NoteRepository(UniversiteDbContext context) : Repository<Note>(cont
             throw new ArgumentException("Étudiant ou UE introuvable");
 
         await AddNoteAsync(etudiant, ue, note);
+        
     }
-    
+    // Dans NoteRepository
+    public async Task AddNoteAsync(Etudiant etudiant, Ue ue, float note)
+    {
+        // Recherche d'une note existante
+        var noteExistante = await context.Notes
+            .FirstOrDefaultAsync(n => n.EtudiantId == etudiant.Id && n.UeId == ue.Id);
+
+        if (noteExistante != null)
+        {
+            // Mise à jour de la note existante
+            noteExistante.Valeur = note;
+        }
+        else
+        {
+            // Création d'une nouvelle note
+            var nouvelleNote = new Note
+            {
+                EtudiantId = etudiant.Id,
+                UeId = ue.Id,
+                Valeur = note
+            };
+            await context.Notes.AddAsync(nouvelleNote);
+        }
+
+        await context.SaveChangesAsync();
+    }
 }

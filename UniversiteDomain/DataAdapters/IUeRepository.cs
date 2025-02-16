@@ -4,5 +4,6 @@ namespace UniversiteDomain.DataAdapters;
 
 public interface IUeRepository : IRepository<Ue>
 {
-    
+    Task<Ue?> GetByNumeroAsync(string numeroUe); 
+
 }
