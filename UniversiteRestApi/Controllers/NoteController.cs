@@ -9,21 +9,9 @@ namespace UniversiteAPI.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Roles = Roles.Scolarite)]
-public class NotesController : ControllerBase
+public class NotesController (GenerateCsvService _generationService, UploadCsvService _uploadService, IUeRepository _ueRepository): ControllerBase
 {
-    private readonly GenerateCsvService _generationService;
-    private readonly UploadCsvService _uploadService;
-    private readonly IUeRepository _ueRepository;
-
-    public NotesController(
-        GenerateCsvService generationService,
-        UploadCsvService uploadService,
-        IUeRepository ueRepository)
-    {
-        _generationService = generationService;
-        _uploadService = uploadService;
-        _ueRepository = ueRepository;
-    }
+    
 
     // Télécharger le template
     [HttpGet("template/{ueId}")]
